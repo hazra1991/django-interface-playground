@@ -1,0 +1,35 @@
+diff --git a/admin_interface/templates/admin/base_site.html b/admin_interface/templates/admin/base_site.html
+index 4b4ad14..8d0b890 100644
+--- a/admin_interface/templates/admin/base_site.html
++++ b/admin_interface/templates/admin/base_site.html
+@@ -145,7 +145,7 @@ admin-interface
+ {% if theme.form_pagination_sticky %} sticky-pagination {% endif %}
+ {% if theme.list_filter_highlight %} list-filter-highlight {% endif %}
+ {% if theme.list_filter_sticky %} list-filter-sticky {% endif %}
+-
++{% adminform as adminform %}
+ {% if adminform and inline_admin_formsets %}
+ {% admin_interface_use_changeform_tabs adminform inline_admin_formsets as admin_interface_use_changeform_tabs %}
+ {% if admin_interface_use_changeform_tabs %}
+diff --git a/admin_interface/templatetags/admin_interface_tags.py b/admin_interface/templatetags/admin_interface_tags.py
+index a675dff..93636f1 100644
+--- a/admin_interface/templatetags/admin_interface_tags.py
++++ b/admin_interface/templatetags/admin_interface_tags.py
+@@ -177,6 +177,8 @@ def admin_interface_date_hierarchy_removal_link(changelist, date_field_name):
+ 
+ @register.simple_tag()
+ def admin_interface_use_changeform_tabs(adminform, inline_forms):
++    print("inline_forms :- ",inline_forms)
++    print("adminform  :-  ",adminform)
+     theme = get_admin_interface_theme()
+     has_fieldset_tabs = (
+         theme.show_fieldsets_as_tabs and adminform and len(adminform.fieldsets) > 1
+@@ -191,3 +193,7 @@ def admin_interface_use_changeform_tabs(adminform, inline_forms):
+ @register.filter
+ def admin_interface_slugify(name):
+     return slugify(str(name or ""))
++
++@register.simple_tag()
++def adminform():
++    return "valuesss"
+\ No newline at end of file
